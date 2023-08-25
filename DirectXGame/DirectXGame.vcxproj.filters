@@ -69,16 +69,28 @@
     <ClCompile Include="2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
-    <ClCompile Include="Vecter3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCharacter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="WorldTransformEx.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Matrix4x4.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vecter3.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVariables.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,6 +186,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BaseCharacter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -45,14 +45,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\nlohmann;$(ProjectDir)..\External\imgui</IncludePath>
     <LibraryPath>$(ProjectDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)..\External\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\nlohmann;$(ProjectDir)..\External\imgui</IncludePath>
     <LibraryPath>$(ProjectDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)..\External\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
@@ -110,8 +110,12 @@
     <ClCompile Include="BaseCharacter.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4x4.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Vecter3.cpp" />
     <ClCompile Include="WorldTransformEx.cpp" />
@@ -142,11 +146,15 @@
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="scene\GameScene.h" />
   </ItemGroup>
   <ItemGroup>
