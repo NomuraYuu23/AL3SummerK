@@ -9,7 +9,7 @@ public:
 	// 更新
 	void Update();
 	// 描画
-	void Draw(ViewProjection viewProjection);
+	void Draw(const ViewProjection& viewProjection);
 
 private:
 	// ワールド変換データ

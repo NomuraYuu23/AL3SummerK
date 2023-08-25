@@ -22,7 +22,7 @@ void Skydome::Update() {
 }
 
 // 描画
-void Skydome::Draw(ViewProjection viewProjection) {
+void Skydome::Draw(const ViewProjection& viewProjection) {
 
 	// 3Dモデル描画
 	model_->Draw(worldTransform_, viewProjection);

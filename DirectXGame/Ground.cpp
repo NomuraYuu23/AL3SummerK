@@ -27,6 +27,6 @@ void Ground::Update() {}
 /// 描画
 /// </summary>
 /// <param name="viewProjection">ビュープロジェクション</param>
-void Ground::Draw(ViewProjection viewProjection) {
+void Ground::Draw(const ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection);
 }

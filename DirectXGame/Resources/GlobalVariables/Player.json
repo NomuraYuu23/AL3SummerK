@@ -1,0 +1,114 @@
+{
+    "Player": {
+        "MWT Body Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT Body Translate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT Head Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT Head Translate": [
+            0.0,
+            1.0,
+            0.0
+        ],
+        "MWT LL_arm Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT LL_arm Translate": [
+            0.0,
+            -0.8999999761581421,
+            0.0
+        ],
+        "MWT LL_leg Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT LL_leg Translate": [
+            0.0,
+            -0.8999999761581421,
+            0.0
+        ],
+        "MWT LR_arm Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT LR_arm Translate": [
+            0.0,
+            -0.8999999761581421,
+            0.0
+        ],
+        "MWT LR_leg Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT LR_leg Translate": [
+            0.0,
+            -0.8999999761581421,
+            0.0
+        ],
+        "MWT UL_arm Rotate": [
+            0.0,
+            0.0,
+            -0.5
+        ],
+        "MWT UL_arm Translate": [
+            -0.5,
+            0.800000011920929,
+            0.0
+        ],
+        "MWT UL_leg Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT UL_leg Translate": [
+            -0.25,
+            0.0,
+            0.0
+        ],
+        "MWT UR_arm Rotate": [
+            0.0,
+            0.0,
+            0.5
+        ],
+        "MWT UR_arm Translate": [
+            0.5,
+            0.800000011920929,
+            0.0
+        ],
+        "MWT UR_leg Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "MWT UR_leg Translate": [
+            0.25,
+            0.0,
+            0.0
+        ],
+        "WorldTransform Rotate": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "WorldTransform Translate": [
+            0.0,
+            0.0,
+            0.0
+        ]
+    }
+}

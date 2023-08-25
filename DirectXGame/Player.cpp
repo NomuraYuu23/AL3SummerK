@@ -58,31 +58,29 @@ void Player::Initialize(
 	// kModelIndexHead = 1,   //頭
 	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].parent_ =
 	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].translation_.y += 0.15f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].translation_.y += 2.5f;
 
 	// kModelIndexUL_arm = 2, //左上腕
 	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].parent_ =
 	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_.y += 5.0f;
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_.x += -5.0f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_.y += 3.0f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_.x += -1.0f;
 
 	// kModelIndexLL_arm = 3, //左下腕
 	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].parent_ =
 	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].translation_.y += 2.5f;
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].translation_.x += -5.0f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].translation_.y -= 1.5f;
 
 	// kModelIndexUR_arm = 4, //右上腕
 	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].parent_ =
 	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_.y += 5.0f;
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_.x += 5.0f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_.y += 3.0f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_.x += 1.0f;
 
 	// kModelIndexLR_arm = 5, //右下腕
 	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].parent_ =
 	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].translation_.y += 2.5f;
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].translation_.x += 5.0f;
+	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].translation_.y -= 1.5f;
 
 	// kModelIndexUL_leg = 6, //左上足
 	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].parent_ =
@@ -195,7 +193,7 @@ void Player::Initialize(
 	    groupName, "MWT LR_leg Rotate",
 	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].rotation_);
 
-	ApplyGlobalVariables();
+	//ApplyGlobalVariables();
 }
 
 /// <summary>
@@ -397,12 +395,12 @@ void Player::Attack() {
 	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
 		// 弾の位置
 		Vector3 position = GetWorldPosition();
-		position.z += std::cosf(viewProjection_->translation_.y) *
-		              std::cosf(viewProjection_->translation_.x) * 5.0f; // コサイン
-		position.x += std::sinf(viewProjection_->translation_.y) *
-		              std::cosf(viewProjection_->translation_.x) * 5.0f;
-		position.y += -std::sinf(viewProjection_->translation_.x) *
-		              std::cosf(viewProjection_->translation_.z) * 5.0f;
+		position.z += std::cosf(viewProjection_->rotation_.y) *
+		              std::cosf(viewProjection_->rotation_.x) * 5.0f; // コサイン
+		position.x += std::sinf(viewProjection_->rotation_.y) *
+		              std::cosf(viewProjection_->rotation_.x) * 5.0f;
+		position.y += -std::sinf(viewProjection_->rotation_.x) *
+		              std::cosf(viewProjection_->rotation_.z) * 5.0f;
 
 		Vector3 velocity(0, 0, 0);
 		Vector3 reticle3DWorldPosition{

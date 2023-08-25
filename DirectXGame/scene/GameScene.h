@@ -9,6 +9,19 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
+//プレイヤー
+#include "Player.h"
+//追従カメラ
+#include "FollowCamera.h"
+//エネミー
+#include "EnemyManager.h"
+//グラウンド
+#include "Ground.h"
+//スカイドーム
+#include "Skydome.h"
+//衝突マネージャー
+#include "CollisionManager.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -40,6 +53,11 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// カメラ処理
+	/// </summary>
+	void CameraSetting();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -48,4 +66,60 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+
+	ViewProjection* viewProjection_;
+
+	// プレイヤー
+	std::unique_ptr<Player> player_ = nullptr;
+	// プレイヤーマテリアル
+	std::unique_ptr<Material> materialPlayer_ = nullptr;
+	// プレイヤー3Dモデル
+	std::unique_ptr<Model> modelPlayerBody_ = nullptr;
+	std::unique_ptr<Model> modelPlayerHead_ = nullptr;
+	std::unique_ptr<Model> modelPlayerUL_arm_ = nullptr;
+	std::unique_ptr<Model> modelPlayerLL_arm_ = nullptr;
+	std::unique_ptr<Model> modelPlayerUR_arm_ = nullptr;
+	std::unique_ptr<Model> modelPlayerLR_arm_ = nullptr;
+	std::unique_ptr<Model> modelPlayerUL_leg_ = nullptr;
+	std::unique_ptr<Model> modelPlayerLL_leg_ = nullptr;
+	std::unique_ptr<Model> modelPlayerUR_leg_ = nullptr;
+	std::unique_ptr<Model> modelPlayerLR_leg_ = nullptr;
+
+	// プレイヤー弾マテリアル
+	std::unique_ptr<Material> materialPlayerBullet_ = nullptr;
+	// プレイヤー弾モデル
+	std::unique_ptr<Model> modelPlayerBullet_ = nullptr;
+
+	// サイトマテリアル
+	std::unique_ptr<Material> materialSight_ = nullptr;
+	// サイトモデル
+	std::unique_ptr<Model> modelSight_ = nullptr;
+
+	// 追従カメラ
+	std::unique_ptr<FollowCamera> followCamera_ = nullptr;
+
+	// エネミー
+	EnemyManager* enemyManager_ = nullptr;
+	// エネミーマテリアル
+	std::unique_ptr<Material> materialEnemy_ = nullptr;
+	// エネミーモデル
+	std::unique_ptr<Model> modelEnemy_ = nullptr;
+
+	// グラウンド
+	std::unique_ptr<Ground> ground_ = nullptr;
+	// グラウンドマテリアル
+	std::unique_ptr<Material> materialGround_ = nullptr;
+	// グラウンド3Dモデル
+	std::unique_ptr<Model> modelGround_ = nullptr;
+
+	// スカイドーム
+	std::unique_ptr<Skydome> skydome_ = nullptr;
+	// スカイドームマテリアル
+	std::unique_ptr<Material> materialSkydome_ = nullptr;
+	// スカイドーム3Dモデル
+	std::unique_ptr<Model> modelSkydome_ = nullptr;
+
+	// 衝突マネージャー
+	std::unique_ptr<CollisionManager> collisionManager;
+
 };
