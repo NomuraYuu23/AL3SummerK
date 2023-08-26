@@ -43,7 +43,7 @@ public:
 	/// <param name="textureHandle">テクスチャハンドル</param>
 	void Initialize(
 	    const std::vector<Model*>& models, const std::vector<Model*>& modelsBullet,
-	    const std::vector<Model*>& modelsSight);
+	    float lockonRange);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -88,11 +88,6 @@ public:
 	void ReticleUpdate();
 
 	/// <summary>
-	/// サイト更新
-	/// </summary>
-	void SightUpdate();
-
-	/// <summary>
 	/// エネミー登録
 	/// </summary>
 	/// <param name="enemies"></param>
@@ -129,15 +124,8 @@ private:
 	// 発射クールタイム
 	float firingIntervalCount = 0.0f;
 
-	// レティクル3D
-	WorldTransform reticle3DWorldTransform_;
 	// カメラから標準オブジェクトの距離
 	const float kDistanceObject = 80.0f;
-
-	// サイト
-	WorldTransform sightWorldTransform_;
-	// サイトモデル
-	std::vector<Model*> modelsSight_;
 
 	// 敵キャラ
 	std::list<Enemy*> enemies_;
@@ -149,4 +137,11 @@ private:
 	Vector3 lockonPositionStart = {0.0f, 0.0f, 0.0f};
 	// ロックオン線形補間t
 	float lockonT = 1.0f;
+
+	// レティクル3D
+	WorldTransform reticle3DWorldTransform_;
+	// レティクル範囲
+	float lockonRange_ = 0.0f;
+	// レティクル距離
+	float lockonLength_ = 0.0f;
 };

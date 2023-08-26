@@ -14,8 +14,7 @@
 /// <param name="model">モデル</param>
 /// <param name="textureHandle">テクスチャハンドル</param>
 void Player::Initialize(
-    const std::vector<Model*>& models, const std::vector<Model*>& modelsBullet,
-    const std::vector<Model*>& modelsSight) {
+    const std::vector<Model*>& models, const std::vector<Model*>& modelsBullet, float lockonRange) {
 
 	// nullポインタチェック
 	assert(models.front());
@@ -39,11 +38,10 @@ void Player::Initialize(
 	// レティクル
 	reticle3DWorldTransform_.Initialize();
 
-	// サイト
-	sightWorldTransform_.Initialize();
-
-	// サイトモデル
-	modelsSight_ = modelsSight;
+	// レティクル範囲
+	lockonRange_ = lockonRange;
+	// レティクル距離
+	lockonLength_ = 10000.0f;
 
 	// モデルワールドトランスフォーム
 
@@ -227,17 +225,11 @@ void Player::Update() {
 		worldTransform.UpdateMatrix();
 	}
 
-	ImGui::Begin("player");
-	//ImGui::DragFloat3("w", &worldTransform_.translation_.x);
-	ImGui::End();
-
 	// 弾更新
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
 	}
 
-	// サイト更新
-	SightUpdate();
 }
 
 /// <summary>
@@ -258,10 +250,6 @@ void Player::Draw(const ViewProjection& viewProjection) {
 		bullet->Draw(viewProjection);
 	}
 
-	// サイト
-	for (Model* model : modelsSight_) {
-		model->Draw(sightWorldTransform_, viewProjection);
-	}
 }
 
 /// <summary>
@@ -458,11 +446,6 @@ void Player::ReticleUpdate() {
 	direction = vecClac_->Normalize(direction);
 	lockonPosition = vecClac_->Add(posNear, vecClac_->Multiply(kDistanceObject, direction));
 
-	// レティクル範囲
-	float lockonRange = 10000.0f;
-	// レティクル距離
-	float lockonLength = 10000.0f;
-
 	// 今の位置
 	Vector3 reticle3DWorldPosition = {
 	    reticle3DWorldTransform_.matWorld_.m[3][0], 
@@ -472,6 +455,7 @@ void Player::ReticleUpdate() {
 	bool lockonChange = true;
 
 	Vector3 position = GetWorldPosition();
+	position = matCalc_->Transform(position, matViewProjectionViewport);
 
 	// 現在ロックオンしているエネミーをロックオンし続けられるか
 	if (lockonEnemy_) {
@@ -486,7 +470,7 @@ void Player::ReticleUpdate() {
 			// プレイヤーからエネミーまでの距離
 			float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
 
-			if (distance < lockonRange + lockonEnemy_->GetRadius() && length < lockonLength) {
+			if (distance < lockonRange_ + lockonEnemy_->GetRadius() && length < lockonLength_) {
 				lockonChange = false;
 			} else {
 				lockonEnemy_ = nullptr;
@@ -513,7 +497,7 @@ void Player::ReticleUpdate() {
 				float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
 
 				// ロックオン範囲、ロックオン距離にいる
-				if (distance < lockonRange + enemy->GetRadius() && length < lockonLength) {
+				if (distance < lockonRange_ + enemy->GetRadius() && length < lockonLength_) {
 					// 敵をロックオン
 					if (!lockonEnemy) {
 						lockonEnemy = enemy;
@@ -552,33 +536,4 @@ void Player::ReticleUpdate() {
 	// レティクル行列更新
 	reticle3DWorldTransform_.translation_ = reticle3DWorldPosition;
 	reticle3DWorldTransform_.UpdateMatrix();
-}
-
-/// <summary>
-/// サイト更新
-/// </summary>
-void Player::SightUpdate() {
-
-	// 追従対象からカメラまでのオフセット
-	Vector3 offset = {0.0f, 0.0f, -17.0f};
-
-	// カメラの角度から回転行列を計算する
-	Matrix4x4 rotateMatrixX = matCalc_->MakeRotateXMatrix(viewProjection_->rotation_.x);
-	Matrix4x4 rotateMatrixY = matCalc_->MakeRotateYMatrix(viewProjection_->rotation_.y);
-	Matrix4x4 rotateMatrixZ = matCalc_->MakeRotateZMatrix(viewProjection_->rotation_.z);
-
-	Matrix4x4 rotateMatrix =
-	    matCalc_->Multiply(rotateMatrixX, matCalc_->Multiply(rotateMatrixY, rotateMatrixZ));
-
-	// オフセットをカメラの回転に合わせて回転させる
-	offset = matCalc_->TransformNormal(offset, rotateMatrix);
-
-	// 座標をコピーしてオフセット分ずらす
-	sightWorldTransform_.translation_ = vecClac_->Add(worldTransform_.translation_, offset);
-
-	sightWorldTransform_.rotation_.x = viewProjection_->rotation_.x;
-	sightWorldTransform_.rotation_.y = viewProjection_->rotation_.y;
-	sightWorldTransform_.rotation_.z = viewProjection_->rotation_.z;
-
-	sightWorldTransform_.UpdateMatrix();
 }

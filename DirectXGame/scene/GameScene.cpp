@@ -12,7 +12,13 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-		//プレイヤー
+	
+	uint32_t sightTextureHandle = TextureManager::Load("./Resources/sprite/sight.png");
+	spriteSight_.reset(Sprite::Create(
+	    sightTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
+	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+
+	//プレイヤー
 	player_ = std::make_unique<Player>();
 	//プレイヤー3Dモデル
 	modelPlayerBody_.reset(Model::CreateFromOBJ("testBoneLowerJoint",true));
@@ -49,16 +55,8 @@ void GameScene::Initialize() {
 		modelPlayerBullet_.get()
 	};
 
-	//サイトモデル
-	modelSight_.reset(
-	    Model::CreateFromOBJ("sight",true));
-	std::vector<Model*> sightModels = {
-	modelSight_.get()
-	};
-
-
 	//自キャラの初期化
-	player_->Initialize(playerModels, playerBulletModels, sightModels);
+	player_->Initialize(playerModels, playerBulletModels, spriteSight_->GetSize().x / 2.0f);
 
 	//追従カメラ
 	followCamera_ = std::make_unique<FollowCamera>();
@@ -68,8 +66,6 @@ void GameScene::Initialize() {
 
 	//エネミー
 	enemyManager_ = EnemyManager::GetInstance();
-	//エネミーマテリアル
-	materialEnemy_.reset(Material::Create());
 	//エネミーモデル
 	modelEnemy_.reset(Model::CreateFromOBJ("enemy", true));
 	std::vector<Model*> enemyModels = {
@@ -82,8 +78,6 @@ void GameScene::Initialize() {
 
 	//グラウンド
 	ground_ = std::make_unique<Ground>();
-	//グラウンドマテリアル
-	materialGround_.reset(Material::Create());
 	//グラウンドモデル
 	modelGround_.reset(Model::CreateFromOBJ("ground", true));
 	//グラウンドの初期化
@@ -91,8 +85,6 @@ void GameScene::Initialize() {
 
 	//スカイドーム
 	skydome_ = std::make_unique<Skydome>();
-	//スカイドームマテリアル
-	materialSkydome_.reset(Material::Create());
 	//スカイドームモデル
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 	//スカイドームの初期化
@@ -182,6 +174,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	spriteSight_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
