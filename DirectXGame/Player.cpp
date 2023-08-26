@@ -374,9 +374,8 @@ void Player::Move() {
 	worldTransform_.translation_ = vecClac_->Add(worldTransform_.translation_, move);
 
 	// 移動方向に見た目を合わせる(Y軸)
-	if (std::fabsf(move.x) > 0.1 || std::fabsf(move.z) > 0.1) {
-		worldTransform_.rotation_.y = std::atan2f(move.x, move.z);
-	}
+	worldTransform_.rotation_.y = viewProjection_->rotation_.y;
+
 }
 
 /// <summary>
@@ -438,8 +437,9 @@ void Player::ReticleUpdate() {
 	// ビューポート行列
 	Matrix4x4 matViewport =
 	    matCalc_->MakeViewportMatrix(0, 0, WinApp::kWindowWidth, WinApp::kWindowHeight, 0, 1);
-	Matrix4x4 matViewProjectionViewport =
-	    matCalc_->Multiply(viewProjection_->matView, matViewport);
+	// ビュー行列とプロジェクション行列,ビューポート行列を合成する
+	Matrix4x4 matViewProjectionViewport = matCalc_->Multiply(
+	    viewProjection_->matView, matCalc_->Multiply(viewProjection_->matProjection, matViewport));
 
 	// 合成行列の逆行列を計算
 	Matrix4x4 matInverseVPV = matCalc_->Inverse(matViewProjectionViewport);
@@ -459,9 +459,9 @@ void Player::ReticleUpdate() {
 	lockonPosition = vecClac_->Add(posNear, vecClac_->Multiply(kDistanceObject, direction));
 
 	// レティクル範囲
-	float lockonRange = 1000.0f;
+	float lockonRange = 10000.0f;
 	// レティクル距離
-	float lockonLength = 1000.0f;
+	float lockonLength = 10000.0f;
 
 	// 今の位置
 	Vector3 reticle3DWorldPosition = {
@@ -471,6 +471,8 @@ void Player::ReticleUpdate() {
 
 	bool lockonChange = true;
 
+	Vector3 position = GetWorldPosition();
+
 	// 現在ロックオンしているエネミーをロックオンし続けられるか
 	if (lockonEnemy_) {
 		if (!lockonEnemy_->IsDead()) {
@@ -478,11 +480,11 @@ void Player::ReticleUpdate() {
 			positionEnemy = matCalc_->Transform(positionEnemy, matViewProjectionViewport);
 
 			float distance = std::sqrtf(
-			    std::powf(positionEnemy.x - float(WinApp::kWindowWidth) / 2.0f, 2.0f) +
-			    std::powf(positionEnemy.y - float(WinApp::kWindowHeight) / 2.0f, 2.0f));
+			    std::powf(positionEnemy.x - position.x, 2.0f) +
+			    std::powf(positionEnemy.y - position.y, 2.0f));
 
 			// プレイヤーからエネミーまでの距離
-			float length = vecClac_->Length(vecClac_->Subtract(GetWorldPosition(), positionEnemy));
+			float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
 
 			if (distance < lockonRange + lockonEnemy_->GetRadius() && length < lockonLength) {
 				lockonChange = false;
@@ -504,12 +506,11 @@ void Player::ReticleUpdate() {
 
 				// xy上での距離
 				float distance = std::sqrtf(
-				    std::powf(positionEnemy.x - float(WinApp::kWindowWidth) / 2.0f, 2.0f) +
-				    std::powf(positionEnemy.y - float(WinApp::kWindowHeight) / 2.0f, 2.0f));
+				    std::powf(positionEnemy.x - position.x, 2.0f) +
+				    std::powf(positionEnemy.y - position.y, 2.0f));
 
 				// プレイヤーからエネミーまでの距離
-				float length =
-				    vecClac_->Length(vecClac_->Subtract(GetWorldPosition(), positionEnemy));
+				float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
 
 				// ロックオン範囲、ロックオン距離にいる
 				if (distance < lockonRange + enemy->GetRadius() && length < lockonLength) {
