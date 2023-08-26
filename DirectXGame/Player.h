@@ -47,7 +47,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update() override;
+	void Update(Sprite* spriteLockon);
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -85,7 +85,7 @@ public:
 	/// <summary>
 	/// レティクル更新
 	/// </summary>
-	void ReticleUpdate();
+	void ReticleUpdate(Sprite* spriteLockon);
 
 	/// <summary>
 	/// エネミー登録
@@ -97,6 +97,8 @@ public:
 	/// 弾取得
 	/// </summary>
 	std::list<PlayerBullet*> GetBullets() { return bullets_; }
+
+	Enemy* GetLockonEnemy() { return lockonEnemy_; }
 
 	// 衝突時に呼ばれる関数
 	void OnCollision() override{};

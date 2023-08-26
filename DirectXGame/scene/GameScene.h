@@ -67,7 +67,13 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summary>
 
+	//ビュープロジェクション
 	ViewProjection* viewProjection_;
+
+	//サイト
+	std::unique_ptr<Sprite> spriteSight_ = nullptr;
+	//ロックオン
+	std::unique_ptr<Sprite> spriteLockon_ = nullptr;
 
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
@@ -86,8 +92,6 @@ private: // メンバ変数
 
 	// プレイヤー弾モデル
 	std::unique_ptr<Model> modelPlayerBullet_ = nullptr;
-
-	std::unique_ptr<Sprite> spriteSight_ = nullptr;
 
 	// 追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_ = nullptr;

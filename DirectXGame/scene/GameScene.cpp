@@ -18,6 +18,11 @@ void GameScene::Initialize() {
 	    sightTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
 
+	uint32_t lockonTextureHandle = TextureManager::Load("./Resources/sprite/lockon.png");
+	spriteLockon_.reset(Sprite::Create(
+	    lockonTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
+	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+
 	//プレイヤー
 	player_ = std::make_unique<Player>();
 	//プレイヤー3Dモデル
@@ -101,7 +106,7 @@ void GameScene::Update() {
 	enemyManager_->DeleteEnemy();
 
 	// プレイヤー
-	player_->Update();
+	player_->Update(spriteLockon_.get());
 
 	// カメラ設定
 	CameraSetting();
@@ -175,6 +180,7 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 	spriteSight_->Draw();
+	spriteLockon_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

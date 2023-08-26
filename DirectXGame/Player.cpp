@@ -41,7 +41,7 @@ void Player::Initialize(
 	// レティクル範囲
 	lockonRange_ = lockonRange;
 	// レティクル距離
-	lockonLength_ = 10000.0f;
+	lockonLength_ = 1000.0f;
 
 	// モデルワールドトランスフォーム
 
@@ -197,7 +197,7 @@ void Player::Initialize(
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update() {
+void Player::Update(Sprite* spriteLockon) {
 
 // 調整項目の適用
 #ifdef _DEBUG
@@ -215,7 +215,7 @@ void Player::Update() {
 
 	Move();
 
-	ReticleUpdate();
+	ReticleUpdate(spriteLockon);
 
 	Attack();
 
@@ -419,7 +419,7 @@ void Player::Attack() {
 	}
 }
 
-void Player::ReticleUpdate() {
+void Player::ReticleUpdate(Sprite* spriteLockon) {
 
 	// ビュー行列、射影行列、ビューポート行列の合成行列を計算する
 	// ビューポート行列
@@ -536,4 +536,11 @@ void Player::ReticleUpdate() {
 	// レティクル行列更新
 	reticle3DWorldTransform_.translation_ = reticle3DWorldPosition;
 	reticle3DWorldTransform_.UpdateMatrix();
+
+	
+	Vector3 spriteLockonPosition =
+	    matCalc_->Transform(reticle3DWorldPosition, matViewProjectionViewport);
+
+	spriteLockon->SetPosition(Vector2(spriteLockonPosition.x, spriteLockonPosition.y)); 
+
 }
