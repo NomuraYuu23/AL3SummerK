@@ -384,6 +384,14 @@ void Player::Move() {
 /// </summary>
 void Player::Attack() {
 
+	if (firingIntervalCount > 0.0f) {
+		firingIntervalCount -= 1.0f / 60.0f;
+		if (firingIntervalCount <= 0.0f) {
+			firingIntervalCount = 0.0f;
+		}
+		return;
+	}
+
 	// ゲームパッドの状態を得る変数(XINPUT)
 	XINPUT_STATE joyState;
 
@@ -413,10 +421,14 @@ void Player::Attack() {
 
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(modelsBullet_, position, velocity);
+		newBullet->Initialize(modelsBullet_, position, viewProjection_->rotation_, velocity);
 
 		// 弾を登録する
 		bullets_.push_back(newBullet);
+
+		//クールタイム
+		firingIntervalCount = kFiringInterval;
+
 	}
 }
 

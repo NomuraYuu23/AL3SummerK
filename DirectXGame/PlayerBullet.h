@@ -8,7 +8,8 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize(
-	    const std::vector<Model*>& models, const Vector3& position, const Vector3& velocity);
+	    const std::vector<Model*>& models, const Vector3& position,
+	    const Vector3& rotation, const Vector3& velocity);
 
 	/// <summary>
 	/// 更新

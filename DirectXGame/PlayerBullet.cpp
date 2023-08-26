@@ -7,7 +7,8 @@
 /// 初期化
 /// </summary>
 void PlayerBullet::Initialize(
-    const std::vector<Model*>& models, const Vector3& position, const Vector3& velocity) {
+    const std::vector<Model*>& models, const Vector3& position, 
+	const Vector3& rotation, const Vector3& velocity) {
 
 	// nullポインタチェック
 	assert(models.front());
@@ -18,6 +19,7 @@ void PlayerBullet::Initialize(
 	worldTransform_.Initialize();
 	// 引数で受け取った初期座標をセット
 	worldTransform_.translation_ = position;
+	worldTransform_.rotation_ = rotation;
 
 	// 引数で受け取った速度をメンバ変数に代入
 	velocity_ = velocity;

@@ -120,12 +120,14 @@ private:
 
 	// 弾
 	std::list<PlayerBullet*> bullets_;
-
 	// モデル
 	std::vector<Model*> modelsBullet_;
-
 	// 弾の速度
 	const float kBulletSpeed = 1.0f;
+	// 発射間隔(秒)
+	const float kFiringInterval = 1.0f;
+	// 発射クールタイム
+	float firingIntervalCount = 0.0f;
 
 	// レティクル3D
 	WorldTransform reticle3DWorldTransform_;
@@ -134,15 +136,13 @@ private:
 
 	// サイト
 	WorldTransform sightWorldTransform_;
-
 	// サイトモデル
 	std::vector<Model*> modelsSight_;
 
 	// 敵キャラ
 	std::list<Enemy*> enemies_;
-
+	//ロックオンしているエネミー
 	Enemy* lockonEnemy_ = nullptr;
-
 	// ロックオンポジション
 	Vector3 lockonPosition = {0.0f, 0.0f, 0.0f};
 	// ロックオン移動開始地点
