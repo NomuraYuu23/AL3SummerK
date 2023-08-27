@@ -18,8 +18,7 @@ void EnemyManager::Initialize(const std::vector<Model*>& models, Player* player)
 	player_ = player;
 	enemyCount = 0;
 
-	size_t initEnemy = 4;
-	for (size_t i = 0; i < initEnemy; i++) {
+	for (size_t i = 0; i < enemyMax; i++) {
 		AddEnemy(i);
 	}
 }
