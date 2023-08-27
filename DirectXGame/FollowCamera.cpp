@@ -1,6 +1,7 @@
 #include "FollowCamera.h"
 #include "Matrix4x4.h"
 #include "Vector3.h"
+#include <numbers>
 
 void FollowCamera::Initialize() {
 
@@ -46,8 +47,18 @@ void FollowCamera::Update() {
 	// ゲームパッドの状態を得る変数(XINPUT)
 	XINPUT_STATE joyState;
 
+	// 回転x上限
+	float rotationLimitX = float(std::numbers::pi) / 4.0f;
+
 	if (input_->GetJoystickState(0, joyState)) {
 		viewProjection_.rotation_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * RotateSpeed;
+		viewProjection_.rotation_.x -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * RotateSpeed;
+		if (viewProjection_.rotation_.x < -rotationLimitX) {
+			viewProjection_.rotation_.x = -rotationLimitX; 
+		}
+		if (viewProjection_.rotation_.x > rotationLimitX) {
+			viewProjection_.rotation_.x = rotationLimitX;
+		}
 	}
 	// ビュー更新
 	viewProjection_.UpdateMatrix();
