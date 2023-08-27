@@ -348,7 +348,7 @@ void Player::Move() {
 	}
 
 	// カメラの角度から回転行列を計算する
-	Matrix4x4 rotateMatrixX = matCalc_->MakeRotateXMatrix(viewProjection_->rotation_.x);
+	Matrix4x4 rotateMatrixX = matCalc_->MakeRotateXMatrix(0.0f);
 	Matrix4x4 rotateMatrixY = matCalc_->MakeRotateYMatrix(viewProjection_->rotation_.y);
 	Matrix4x4 rotateMatrixZ = matCalc_->MakeRotateZMatrix(viewProjection_->rotation_.z);
 

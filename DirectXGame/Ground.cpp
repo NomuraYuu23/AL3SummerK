@@ -14,7 +14,7 @@ void Ground::Initialize(Model* model) {
 
 	// ワールド変換データの初期化
 	worldTransform_.Initialize();
-	worldTransform_.translation_.y -= 5.0f;
+	worldTransform_.translation_.y -= 15.0f;
 	worldTransform_.UpdateMatrix();
 }
 

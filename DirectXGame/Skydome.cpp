@@ -10,8 +10,8 @@ void Skydome::Initialize(Model* model) {
 	model_ = model;
 
 	worldTransform_.Initialize();
-	// 引数で受け取った初期座標をセット
-	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_.y -= 15.0f;
+	worldTransform_.UpdateMatrix();
 }
 
 // 更新
