@@ -88,6 +88,11 @@ public:
 	void ReticleUpdate(Sprite* spriteLockon);
 
 	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
+	/// <summary>
 	/// エネミー登録
 	/// </summary>
 	/// <param name="enemies"></param>

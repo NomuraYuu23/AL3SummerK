@@ -63,3 +63,10 @@ void FollowCamera::Update() {
 	// ビュー更新
 	viewProjection_.UpdateMatrix();
 }
+
+void FollowCamera::Reset() {
+
+	viewProjection_.translation_ = {0, 0, 0};
+	viewProjection_.rotation_ = {0, 0, 0};
+
+}

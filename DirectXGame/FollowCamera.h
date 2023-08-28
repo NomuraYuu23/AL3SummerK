@@ -11,6 +11,8 @@ public:
 
 	void Update();
 
+	void Reset();
+
 	void SetTarget(const WorldTransform* target) { target_ = target; }
 
 	ViewProjection* GetViewProjectionAddress() { return &viewProjection_; }

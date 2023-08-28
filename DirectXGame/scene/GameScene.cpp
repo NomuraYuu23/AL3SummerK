@@ -162,13 +162,10 @@ void GameScene::Update() {
 		}
 	}
 
-
 	//クリア
 	if (enemyManager_->GetEnemyCount() <= 0) {
 		clearFlg = true;
 	}
-
-
 
 }
 
@@ -246,10 +243,18 @@ void GameScene::CameraSetting() {
 /// </summary>
 void GameScene::Reset() {
 
+	//プレイヤー
+	player_->Reset();
+	//追従カメラ
+	followCamera_->Reset();
+	//エネミー
+	enemyManager_->Reset();
+	player_->SetEnemies(enemyManager_->GetEnemies());
 	// クリアフラグ
 	clearFlg = false;
 	// 色
 	blackoutColor_ = {0.0f, 0.0f, 0.0f, 0.0f};
+	spriteBlackout_->SetColor(blackoutColor_);
 	// スタートフラグ
 	Isblackout_ = false;
 

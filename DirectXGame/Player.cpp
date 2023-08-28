@@ -544,3 +544,21 @@ void Player::ReticleUpdate(Sprite* spriteLockon) {
 	spriteLockon->SetPosition(Vector2(spriteLockonPosition.x, spriteLockonPosition.y)); 
 
 }
+
+/// <summary>
+/// リセット
+/// </summary>
+void Player::Reset() {
+
+	// レティクル
+	reticle3DWorldTransform_.scale_ = {1, 1, 1};
+	reticle3DWorldTransform_.rotation_ = {0, 0, 0};
+	reticle3DWorldTransform_.translation_ = {0, 0, 0};
+	reticle3DWorldTransform_.UpdateMatrix();
+	// ワールド変換データの初期化
+	worldTransform_.scale_ = {1,1,1};
+	worldTransform_.rotation_ = {0,0,0};
+	worldTransform_.translation_ = {0, 0, 0};
+	worldTransform_.UpdateMatrix();
+
+}

@@ -44,6 +44,11 @@ public:
 	void Delete();
 
 	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
+	/// <summary>
 	///
 	/// </summary>
 	std::list<Enemy*> GetEnemies() { return enemies_; }

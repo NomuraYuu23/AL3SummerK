@@ -83,3 +83,19 @@ void EnemyManager::Delete() {
 		return true;
 	});
 }
+
+/// <summary>
+/// リセット
+/// </summary>
+void EnemyManager::Reset() {
+
+	if (enemyCount_ == 0) {
+		Delete();
+		enemyCount_ = enemyMax;
+
+		for (size_t i = 0; i < enemyMax; i++) {
+			AddEnemy(i);
+		}
+	}
+
+}
