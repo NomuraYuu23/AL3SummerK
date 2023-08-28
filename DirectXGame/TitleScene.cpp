@@ -15,17 +15,28 @@ void TitleScene::Initialize() {
 	
 	viewProjection_.Initialize();
 
-	// 色
-	color_ = {1.0f, 1.0f, 1.0f, 1.0f};
-
 	uint32_t titleTextureHandle = TextureManager::Load("./Resources/sprite/title.png");
 	spriteTitle_.reset(Sprite::Create(
 	    titleTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
-	    color_, Vector2(0.5f, 0.5f)));
+	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
 	spriteTitle_->SetSize(Vector2(WinApp::kWindowWidth, WinApp::kWindowHeight));
 
+	
+	// 画面暗転
+	// 色
+	blackoutColor_ = {0.0f, 0.0f, 0.0f, 1.0f};
+
+	uint32_t blackoutTextureHandle = TextureManager::Load("./Resources/white1x1.png");
+	spriteBlackout_.reset(Sprite::Create(
+	    blackoutTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
+	    blackoutColor_, Vector2(0.5f, 0.5f)));
+	spriteBlackout_->SetSize(Vector2(WinApp::kWindowWidth, WinApp::kWindowHeight));
+
 	// スタートフラグ
-	Isblackout_ = false;
+	IsWhiteout_ = true;
+	// スタートフラグ
+	IsBlackout_ = false;
+
 	// スピード
 	blackoutSpeed_ = 0.01f;
 
@@ -46,21 +57,23 @@ void TitleScene::Update() {
 		return;
 	}
 
-	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !Isblackout_) {
-		Isblackout_ = true;
-	} else if (Isblackout_) {
-		color_.x -= blackoutSpeed_;
-		color_.y -= blackoutSpeed_;
-		color_.z -= blackoutSpeed_;
-		if (color_.x < 0.0f) {
-			color_.x = 0.0f;
-			color_.y = 0.0f;
-			color_.z = 0.0f;
+	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !IsBlackout_ && !IsWhiteout_) {
+		IsBlackout_ = true;
+	} else if (IsBlackout_) {
+		blackoutColor_.w += blackoutSpeed_;
+		if (blackoutColor_.w >= 1.0f) {
+			blackoutColor_.w = 1.0f;
 			endOfScene_ = true;
+		}
+	} else if (IsWhiteout_) {
+		blackoutColor_.w -= blackoutSpeed_;
+		if (blackoutColor_.w <= 0.0f) {
+			blackoutColor_.w = 0.0f;
+			IsWhiteout_ = false;
 		}
 	}
 
-	spriteTitle_->SetColor(color_);
+	spriteBlackout_->SetColor(blackoutColor_);
 
 }
 
@@ -80,6 +93,7 @@ void TitleScene::Draw() {
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
 	spriteTitle_->Draw();
+	spriteBlackout_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -120,9 +134,10 @@ void TitleScene::Draw() {
 void TitleScene::Reset() {
 
 	// 色
-	color_ = {1.0f, 1.0f, 1.0f, 1.0f};
+	blackoutColor_ = {0.0f, 0.0f, 0.0f, 1.0f};
 	// スタートフラグ
-	Isblackout_ = false;
+	IsWhiteout_ = true;
+	IsBlackout_ = false;
 
 	endOfScene_ = false;
 

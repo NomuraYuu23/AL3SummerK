@@ -60,15 +60,17 @@ private:
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	// 色
-	Vector4 color_;
-
 	//タイトル画面
 	std::unique_ptr<Sprite> spriteTitle_ = nullptr;
 
 	//画面暗転
+	std::unique_ptr<Sprite> spriteBlackout_ = nullptr;
+	// スタートフラグ
+	bool IsWhiteout_;
+	// 色
+	Vector4 blackoutColor_;
 	//スタートフラグ 
-	bool Isblackout_;
+	bool IsBlackout_;
 	//スピード
 	float blackoutSpeed_;
 
