@@ -5,6 +5,7 @@
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
+#include "TitleScene.h"
 #include "WinApp.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -16,6 +17,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
+	TitleScene* titleScene = nullptr;
 	GameScene* gameScene = nullptr;
 
 	// ゲームウィンドウの作成
@@ -57,9 +59,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer->Initialize();
 #pragma endregion
 
+	//タイトルシーンの初期化
+	titleScene = new TitleScene();
+	titleScene->Initialize();
+
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize();
+
+	bool gameSceneNow = false;
 
 	// メインループ
 	while (true) {
@@ -72,8 +80,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+
+		if (gameSceneNow) {
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
+		} else {
+			// タイトルシーンの毎フレーム処理
+			titleScene->Update();
+		}
+		
 		// 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
@@ -81,8 +96,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		gameScene->Draw();
+
+		if (gameSceneNow) {
+			// ゲームシーンの毎フレーム処理
+			gameScene->Draw();
+		} else {
+			// タイトルシーンの毎フレーム処理
+			titleScene->Draw();
+		}
+
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット
@@ -94,6 +116,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	// 各種解放
+	SafeDelete(titleScene);
 	SafeDelete(gameScene);
 	audio->Finalize();
 	// ImGui解放
