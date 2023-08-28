@@ -62,6 +62,8 @@ private:
 	float moveT = 0.025f;
 	// 速さ
 	const float speed = 0.1f;
+	// 回転速さ
+	const float rotateSpeed = 0.1f;
 	// 移動条件距離
 	const float distanceToMove = 20.0f;
 
