@@ -58,6 +58,16 @@ public: // メンバ関数
 	/// </summary>
 	void CameraSetting();
 
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
+	/// <summary>
+	/// シーン終了フラグ取得
+	/// </summary>
+	bool GetEndOfScene() { return endOfScene_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -68,7 +78,7 @@ private: // メンバ変数
 	/// </summary>
 
 	//ビュープロジェクション
-	ViewProjection* viewProjection_;
+	ViewProjection* viewProjection_ = nullptr;
 
 	//サイト
 	std::unique_ptr<Sprite> spriteSight_ = nullptr;
@@ -113,5 +123,21 @@ private: // メンバ変数
 
 	// 衝突マネージャー
 	std::unique_ptr<CollisionManager> collisionManager;
+
+	//クリアフラグ
+	bool clearFlg;
+	
+	//暗転
+	// サイト
+	std::unique_ptr<Sprite> spriteBlackout_ = nullptr;
+	// スタートフラグ
+	bool Isblackout_;
+	// スピード
+	float blackoutSpeed_;
+	// 色
+	Vector4 blackoutColor_;
+
+	// シーン終了フラグ
+	bool endOfScene_;
 
 };

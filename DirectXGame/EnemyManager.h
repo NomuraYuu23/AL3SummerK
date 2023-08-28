@@ -16,7 +16,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::vector<Model*>& models, Player* player);
+	void Initialize(const std::vector<Model*>& models);
 
 	/// <summary>
 	/// 更新
@@ -48,6 +48,8 @@ public:
 	/// </summary>
 	std::list<Enemy*> GetEnemies() { return enemies_; }
 
+	size_t GetEnemyCount() { return enemyCount_; }
+
 private:
 	EnemyManager() = default;
 	~EnemyManager() = default;
@@ -58,11 +60,9 @@ private:
 	std::list<Enemy*> enemies_;
 	// エネミーモデル
 	std::vector<Model*> models_;
-	// プレイヤー
-	Player* player_;
 
 	// エネミー数
-	size_t enemyCount;
+	size_t enemyCount_;
 	// エネミー最大数
 	const size_t enemyMax = 20;
 

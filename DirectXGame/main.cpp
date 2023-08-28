@@ -117,11 +117,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//シーン切り替え
 		if (gameSceneNow) {
 			// ゲームシーン終了
-			//gameScene->();
+			if (gameScene->GetEndOfScene()) {
+				gameSceneNow = false;
+				titleScene->Reset();
+			}
 		} else {
 			// タイトルシーン終了
 			if (titleScene->GetEndOfScene()) {
 				gameSceneNow = true;
+				gameScene->Reset();
 			}
 		}
 

@@ -42,6 +42,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
+	/// <summary>
 	/// シーン終了フラグ取得
 	/// </summary>
 	bool GetEndOfScene() { return endOfScene_; }

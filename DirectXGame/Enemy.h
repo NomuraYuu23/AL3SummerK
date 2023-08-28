@@ -10,8 +10,6 @@
 
 #include "BaseCharacter.h"
 
-class Player;
-
 class Enemy : public BaseCharacter {
 
 public:
@@ -21,8 +19,7 @@ public:
 	/// <param name="model">モデル</param>
 	/// <param name="textureHandle">テクスチャハンドル</param>
 	void Initialize(
-	    const std::vector<Model*>& models, Player* player,
-	    Vector3 position = {0.0f, 0.0f, 0.0f});
+	    const std::vector<Model*>& models, Vector3 position = {0.0f, 0.0f, 0.0f});
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -52,9 +49,6 @@ private:
 	Input* input_;
 	Matrix4x4Calc* matCalc_;
 	Vector3Calc* vecClac_;
-
-	// プレイヤー
-	Player* player_;
 
 	// 速度
 	Vector3 velocity_;

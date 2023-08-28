@@ -12,11 +12,10 @@ EnemyManager* EnemyManager::GetInstance() {
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyManager::Initialize(const std::vector<Model*>& models, Player* player) {
+void EnemyManager::Initialize(const std::vector<Model*>& models) {
 
 	models_ = models;
-	player_ = player;
-	enemyCount = 0;
+	enemyCount_ = enemyMax;
 
 	for (size_t i = 0; i < enemyMax; i++) {
 		AddEnemy(i);
@@ -50,7 +49,7 @@ void EnemyManager::AddEnemy(size_t positionNum) {
 
 	Enemy* enemy = new Enemy();
 
-	enemy->Initialize(models_, player_, initPositionData[positionNum]);
+	enemy->Initialize(models_, initPositionData[positionNum]);
 	enemies_.push_back(enemy);
 }
 
@@ -58,6 +57,12 @@ void EnemyManager::AddEnemy(size_t positionNum) {
 /// エネミー削除
 /// </summary>
 void EnemyManager::DeleteEnemy() {
+
+	for (Enemy* enemy : enemies_) {
+		if (enemy->IsDead()) {
+			enemyCount_--;
+		}
+	}
 
 	// デスフラグの立った敵を削除
 	enemies_.remove_if([](Enemy* enemy) {

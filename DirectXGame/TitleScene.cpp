@@ -113,3 +113,17 @@ void TitleScene::Draw() {
 
 #pragma endregion
 }
+
+/// <summary>
+/// リセット
+/// </summary>
+void TitleScene::Reset() {
+
+	// 色
+	color_ = {1.0f, 1.0f, 1.0f, 1.0f};
+	// スタートフラグ
+	Isblackout_ = false;
+
+	endOfScene_ = false;
+
+}

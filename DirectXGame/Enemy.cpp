@@ -1,5 +1,4 @@
 #include "Enemy.h"
-#include "Player.h"
 
 // ImGui
 #include "ImGuiManager.h"
@@ -10,8 +9,7 @@
 /// </summary>
 /// <param name="model">モデル</param>
 /// <param name="textureHandle">テクスチャハンドル</param>
-void Enemy::Initialize(const std::vector<Model*>& models, Player* player,
-    Vector3 position) {
+void Enemy::Initialize(const std::vector<Model*>& models, Vector3 position) {
 
 	// nullポインタチェック
 	assert(models.front());
@@ -29,9 +27,6 @@ void Enemy::Initialize(const std::vector<Model*>& models, Player* player,
 	SetCollisionAttribute(0xfffffffd);
 	// 衝突対象を自分の属性以外に設定
 	SetCollisionMask(0x00000002);
-
-	// プレイヤーのトランスフォーム
-	player_ = player;
 
 	velocity_ = {0.1f, 0.1f, 0.1f};
 }

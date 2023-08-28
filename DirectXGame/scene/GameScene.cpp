@@ -77,7 +77,7 @@ void GameScene::Initialize() {
 		modelEnemy_.get()
 	};
 	//エネミー
-	enemyManager_->Initialize(enemyModels,player_.get());
+	enemyManager_->Initialize(enemyModels);
 	
 	player_->SetEnemies(enemyManager_->GetEnemies());
 
@@ -97,6 +97,28 @@ void GameScene::Initialize() {
 
 	// 衝突マネージャー
 	collisionManager.reset(new CollisionManager);
+
+	// クリアフラグ
+	clearFlg = false;
+	// 暗転
+	uint32_t blackoutTextureHandle = TextureManager::Load("./Resources/white1x1.png");
+
+	// 色
+	blackoutColor_ = {0.0f, 0.0f, 0.0f, 0.0f};
+
+	spriteBlackout_.reset(Sprite::Create(
+	    blackoutTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
+	    blackoutColor_, Vector2(0.5f, 0.5f)));
+	spriteBlackout_->SetSize(Vector2(WinApp::kWindowWidth, WinApp::kWindowHeight));
+	
+	// スタートフラグ
+	Isblackout_ = false;
+	// スピード
+	blackoutSpeed_ = 0.01f;
+
+	// シーン終了フラグ
+	endOfScene_ = false;
+
 }
 
 void GameScene::Update() {
@@ -129,6 +151,24 @@ void GameScene::Update() {
 	}
 	// 当たり判定
 	collisionManager->CheakAllCollision();
+
+	//タイトルへ
+	if (clearFlg) {
+		blackoutColor_.w += blackoutSpeed_;
+		spriteBlackout_->SetColor(blackoutColor_);
+		if (blackoutColor_.w > 1.0f) {
+			blackoutColor_.w = 1.0f;
+			endOfScene_ = true;
+		}
+	}
+
+
+	//クリア
+	if (enemyManager_->GetEnemyCount() <= 0) {
+		clearFlg = true;
+	}
+
+
 
 }
 
@@ -181,6 +221,7 @@ void GameScene::Draw() {
 	/// </summary>
 	spriteSight_->Draw();
 	spriteLockon_->Draw();
+	spriteBlackout_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -193,35 +234,26 @@ void GameScene::Draw() {
 /// </summary>
 void GameScene::CameraSetting() {
 
-	/*
-#ifdef _DEBUG
-	if (input_->TriggerKey(DIK_SPACE)) {
-		if (debugCamera_.get()->GetDebugCameraUsed()) {
-			debugCamera_.get()->SetDebugCameraUsed(false);
-		} else {
-			debugCamera_.get()->SetDebugCameraUsed(true);
-		}
-	}
-#endif
-
-	// カメラの処理
-	if (debugCamera_.get()->GetDebugCameraUsed()) {
-		// デバッグカメラの更新
-		debugCamera_->Update();
-
-		viewProjection_ = debugCamera_.get()->GetViewProjection();
-
-	} else {
-		// 追従カメラの更新
-		followCamera_->Update();
-
-		viewProjection_ = followCamera_.get()->GetViewProjection();
-	}
-	*/
-
 	// 追従カメラの更新
 	followCamera_->Update();
 
 	viewProjection_ = followCamera_.get()->GetViewProjectionAddress();
+
+}
+
+/// <summary>
+/// リセット
+/// </summary>
+void GameScene::Reset() {
+
+	// クリアフラグ
+	clearFlg = false;
+	// 色
+	blackoutColor_ = {0.0f, 0.0f, 0.0f, 0.0f};
+	// スタートフラグ
+	Isblackout_ = false;
+
+	// シーン終了フラグ
+	endOfScene_ = false;
 
 }
