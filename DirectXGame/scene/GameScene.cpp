@@ -104,7 +104,7 @@ void GameScene::Initialize() {
 	uint32_t blackoutTextureHandle = TextureManager::Load("./Resources/white1x1.png");
 
 	// 色
-	blackoutColor_ = {0.0f, 0.0f, 0.0f, 0.0f};
+	blackoutColor_ = {0.0f, 0.0f, 0.0f, 1.0f};
 
 	spriteBlackout_.reset(Sprite::Create(
 	    blackoutTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
@@ -112,7 +112,7 @@ void GameScene::Initialize() {
 	spriteBlackout_->SetSize(Vector2(WinApp::kWindowWidth, WinApp::kWindowHeight));
 	
 	// スタートフラグ
-	Isblackout_ = false;
+	startFlg_ = false;
 	// スピード
 	blackoutSpeed_ = 0.01f;
 
@@ -122,6 +122,16 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
+
+	//ゲームスタート前
+	if (!startFlg_) {
+		blackoutColor_.w -= blackoutSpeed_;
+		spriteBlackout_->SetColor(blackoutColor_);
+		if (blackoutColor_.w <= 0.0f) {
+			blackoutColor_.w = 0.0f;
+			startFlg_ = true;
+		}
+	}
 
 	// オブジェクト更新
 
@@ -253,10 +263,10 @@ void GameScene::Reset() {
 	// クリアフラグ
 	clearFlg = false;
 	// 色
-	blackoutColor_ = {0.0f, 0.0f, 0.0f, 0.0f};
+	blackoutColor_ = {0.0f, 0.0f, 0.0f, 1.0f};
 	spriteBlackout_->SetColor(blackoutColor_);
 	// スタートフラグ
-	Isblackout_ = false;
+	startFlg_ = false;
 
 	// シーン終了フラグ
 	endOfScene_ = false;

@@ -131,7 +131,7 @@ private: // メンバ変数
 	// サイト
 	std::unique_ptr<Sprite> spriteBlackout_ = nullptr;
 	// スタートフラグ
-	bool Isblackout_;
+	bool startFlg_;
 	// スピード
 	float blackoutSpeed_;
 	// 色
