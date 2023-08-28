@@ -41,6 +41,11 @@ public:
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// シーン終了フラグ取得
+	/// </summary>
+	bool GetEndOfScene() { return endOfScene_; }
+
 private:
 
 	DirectXCommon* dxCommon_ = nullptr;
@@ -50,7 +55,19 @@ private:
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
+	// 色
+	Vector4 color_;
+
 	//タイトル画面
 	std::unique_ptr<Sprite> spriteTitle_ = nullptr;
+
+	//画面暗転
+	//スタートフラグ 
+	bool Isblackout_;
+	//スピード
+	float blackoutSpeed_;
+
+	//シーン終了フラグ
+	bool endOfScene_;
 
 };

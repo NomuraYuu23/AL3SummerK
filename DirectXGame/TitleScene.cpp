@@ -15,11 +15,21 @@ void TitleScene::Initialize() {
 	
 	viewProjection_.Initialize();
 
+	// 色
+	color_ = {1.0f, 1.0f, 1.0f, 1.0f};
+
 	uint32_t titleTextureHandle = TextureManager::Load("./Resources/sprite/title.png");
 	spriteTitle_.reset(Sprite::Create(
 	    titleTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
-	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+	    color_, Vector2(0.5f, 0.5f)));
 	spriteTitle_->SetSize(Vector2(WinApp::kWindowWidth, WinApp::kWindowHeight));
+
+	// スタートフラグ
+	Isblackout_ = false;
+	// スピード
+	blackoutSpeed_ = 0.01f;
+
+	endOfScene_ = false;
 
 }
 
@@ -28,7 +38,29 @@ void TitleScene::Initialize() {
 /// </summary>
 void TitleScene::Update() {
 
+	// ゲームパッドの状態を得る変数(XINPUT)
+	XINPUT_STATE joyState;
 
+	// を押していたら
+	if (!input_->GetJoystickState(0, joyState)) {
+		return;
+	}
+
+	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !Isblackout_) {
+		Isblackout_ = true;
+	} else if (Isblackout_) {
+		color_.x -= blackoutSpeed_;
+		color_.y -= blackoutSpeed_;
+		color_.z -= blackoutSpeed_;
+		if (color_.x < 0.0f) {
+			color_.x = 0.0f;
+			color_.y = 0.0f;
+			color_.z = 0.0f;
+			endOfScene_ = true;
+		}
+	}
+
+	spriteTitle_->SetColor(color_);
 
 }
 

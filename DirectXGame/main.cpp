@@ -98,10 +98,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->PreDraw();
 
 		if (gameSceneNow) {
-			// ゲームシーンの毎フレーム処理
+			// ゲームシーンの描画
 			gameScene->Draw();
 		} else {
-			// タイトルシーンの毎フレーム処理
+			// タイトルシーンの描画
 			titleScene->Draw();
 		}
 
@@ -113,6 +113,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Draw();
 		// 描画終了
 		dxCommon->PostDraw();
+
+		//シーン切り替え
+		if (gameSceneNow) {
+			// ゲームシーン終了
+			//gameScene->();
+		} else {
+			// タイトルシーン終了
+			if (titleScene->GetEndOfScene()) {
+				gameSceneNow = true;
+			}
+		}
+
 	}
 
 	// 各種解放
