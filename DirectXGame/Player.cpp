@@ -566,4 +566,12 @@ void Player::Reset() {
 	worldTransform_.translation_ = {0, 0, 0};
 	worldTransform_.UpdateMatrix();
 
+	//エネミークリア
+	enemies_.clear();
+	//弾を削除
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		delete bullet;
+		return true;
+	});
+
 }

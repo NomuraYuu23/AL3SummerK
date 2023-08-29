@@ -84,6 +84,8 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> spriteSight_ = nullptr;
 	//ロックオン
 	std::unique_ptr<Sprite> spriteLockon_ = nullptr;
+	//クリア
+	std::unique_ptr<Sprite> spriteClear_ = nullptr;
 
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
@@ -132,6 +134,8 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> spriteBlackout_ = nullptr;
 	// スタートフラグ
 	bool startFlg_;
+	// エンドフラグ
+	bool endFlg_;
 	// スピード
 	float blackoutSpeed_;
 	// 色

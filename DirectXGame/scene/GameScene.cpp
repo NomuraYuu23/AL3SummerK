@@ -23,6 +23,11 @@ void GameScene::Initialize() {
 	    lockonTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
 
+	uint32_t clearTextureHandle = TextureManager::Load("./Resources/sprite/clear.png");
+	spriteClear_.reset(Sprite::Create(
+	    clearTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
+	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+
 	//プレイヤー
 	player_ = std::make_unique<Player>();
 	//プレイヤー3Dモデル
@@ -113,6 +118,8 @@ void GameScene::Initialize() {
 	
 	// スタートフラグ
 	startFlg_ = false;
+	// エンドフラグ
+	endFlg_ = false;
 	// スピード
 	blackoutSpeed_ = 0.01f;
 
@@ -122,6 +129,14 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
+
+	// ゲームパッドの状態を得る変数(XINPUT)
+	XINPUT_STATE joyState;
+
+	// を押していたら
+	if (!input_->GetJoystickState(0, joyState)) {
+		return;
+	}
 
 	//ゲームスタート前
 	if (!startFlg_) {
@@ -136,6 +151,7 @@ void GameScene::Update() {
 	// オブジェクト更新
 
 	enemyManager_->DeleteEnemy();
+	player_->SetEnemies(enemyManager_->GetEnemies());
 
 	// プレイヤー
 	player_->Update(spriteLockon_.get());
@@ -164,11 +180,16 @@ void GameScene::Update() {
 
 	//タイトルへ
 	if (clearFlg) {
-		blackoutColor_.w += blackoutSpeed_;
-		spriteBlackout_->SetColor(blackoutColor_);
-		if (blackoutColor_.w > 1.0f) {
-			blackoutColor_.w = 1.0f;
-			endOfScene_ = true;
+		if (!endFlg_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+			endFlg_ = true;
+		}
+		if (endFlg_) {
+			blackoutColor_.w += blackoutSpeed_;
+			spriteBlackout_->SetColor(blackoutColor_);
+			if (blackoutColor_.w > 1.0f) {
+				blackoutColor_.w = 1.0f;
+				endOfScene_ = true;
+			}
 		}
 	}
 
@@ -228,6 +249,9 @@ void GameScene::Draw() {
 	/// </summary>
 	spriteSight_->Draw();
 	spriteLockon_->Draw();
+	if (clearFlg) {
+		spriteClear_->Draw();
+	}
 	spriteBlackout_->Draw();
 
 	// スプライト描画後処理
@@ -267,6 +291,8 @@ void GameScene::Reset() {
 	spriteBlackout_->SetColor(blackoutColor_);
 	// スタートフラグ
 	startFlg_ = false;
+	// エンドフラグ
+	endFlg_ = false;
 
 	// シーン終了フラグ
 	endOfScene_ = false;
