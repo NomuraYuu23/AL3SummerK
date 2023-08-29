@@ -180,7 +180,9 @@ void GameScene::Update() {
 
 	//タイトルへ
 	if (clearFlg) {
-		if (!endFlg_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+		if (!endFlg_ && 
+			joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER &&
+		    !(preJoyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
 			endFlg_ = true;
 		}
 		if (endFlg_) {
@@ -197,6 +199,8 @@ void GameScene::Update() {
 	if (enemyManager_->GetEnemyCount() <= 0) {
 		clearFlg = true;
 	}
+
+	preJoyState = joyState;
 
 }
 

@@ -83,4 +83,7 @@ private:
 	//シーン終了フラグ
 	bool endOfScene_;
 
+	// ゲームパッドの状態を得る変数(XINPUT)
+	XINPUT_STATE preJoyState;
+
 };

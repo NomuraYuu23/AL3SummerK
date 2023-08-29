@@ -72,7 +72,9 @@ void TitleScene::Update() {
 		return;
 	}
 
-	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && !IsBlackout_ && !IsWhiteout_) {
+	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER &&
+	    !(preJoyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) &&
+		!IsBlackout_ && !IsWhiteout_) {
 		IsBlackout_ = true;
 	} else if (IsBlackout_) {
 		blackoutColor_.w += blackoutSpeed_;
@@ -97,6 +99,8 @@ void TitleScene::Update() {
 		    modelWorldTransform_.rotation_.y - 2.0f * float(std::numbers::pi); 
 	}
 	modelWorldTransform_.UpdateMatrix();
+
+	preJoyState = joyState;
 
 }
 
