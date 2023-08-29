@@ -1,4 +1,5 @@
 #include "TitleScene.h"
+#include <numbers>
 
 TitleScene::TitleScene() {}
 
@@ -15,13 +16,27 @@ void TitleScene::Initialize() {
 	
 	viewProjection_.Initialize();
 
+	//タイトル
 	uint32_t titleTextureHandle = TextureManager::Load("./Resources/sprite/title.png");
 	spriteTitle_.reset(Sprite::Create(
 	    titleTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
 	spriteTitle_->SetSize(Vector2(WinApp::kWindowWidth, WinApp::kWindowHeight));
 
-	
+	//スタート
+	uint32_t startTextureHandle = TextureManager::Load("./Resources/sprite/start.png");
+	spriteStart_.reset(Sprite::Create(
+	    startTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight * 4.0f / 5.0f),
+	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+
+	//モデル
+	model_.reset(Model::CreateFromOBJ("enemy", true));
+	modelWorldTransform_.Initialize();
+	modelWorldTransform_.translation_.x = 7.0f;
+	modelWorldTransform_.translation_.y = 4.0f;
+	modelWorldTransform_.translation_.z = -30.0f;
+	modelWorldTransform_.UpdateMatrix();
+
 	// 画面暗転
 	// 色
 	blackoutColor_ = {0.0f, 0.0f, 0.0f, 1.0f};
@@ -75,6 +90,14 @@ void TitleScene::Update() {
 
 	spriteBlackout_->SetColor(blackoutColor_);
 
+	//モデル
+	modelWorldTransform_.rotation_.y += modelRotateSpeed_;
+	if (modelWorldTransform_.rotation_.y >= 2.0f * float(std::numbers::pi)) {
+		modelWorldTransform_.rotation_.y =
+		    modelWorldTransform_.rotation_.y - 2.0f * float(std::numbers::pi); 
+	}
+	modelWorldTransform_.UpdateMatrix();
+
 }
 
 /// <summary>
@@ -93,7 +116,7 @@ void TitleScene::Draw() {
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
 	spriteTitle_->Draw();
-	spriteBlackout_->Draw();
+	spriteStart_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -108,7 +131,7 @@ void TitleScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	// グラウンド
+	model_->Draw(modelWorldTransform_,viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -121,6 +144,7 @@ void TitleScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	spriteBlackout_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

@@ -62,6 +62,12 @@ private:
 
 	//タイトル画面
 	std::unique_ptr<Sprite> spriteTitle_ = nullptr;
+	//スタート
+	std::unique_ptr<Sprite> spriteStart_ = nullptr;
+	//モデル
+	std::unique_ptr<Model> model_ = nullptr;
+	WorldTransform modelWorldTransform_;
+	float modelRotateSpeed_ = 0.02f;
 
 	//画面暗転
 	std::unique_ptr<Sprite> spriteBlackout_ = nullptr;
