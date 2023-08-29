@@ -206,7 +206,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	// グラウンド
-	ground_->Draw(*viewProjection_);
+	//ground_->Draw(*viewProjection_);
 	// スカイドーム
 	skydome_->Draw(*viewProjection_);
 	// モデル
