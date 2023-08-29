@@ -28,6 +28,12 @@ void GameScene::Initialize() {
 	    clearTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
 
+	//spriteEnd_ 
+	uint32_t endTextureHandle = TextureManager::Load("./Resources/sprite/end.png");
+	spriteEnd_.reset(Sprite::Create(
+	    endTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight * 2.0f / 3.0f),
+	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+
 	//プレイヤー
 	player_ = std::make_unique<Player>();
 	//プレイヤー3Dモデル
@@ -251,10 +257,12 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	spriteSight_->Draw();
-	spriteLockon_->Draw();
 	if (clearFlg) {
 		spriteClear_->Draw();
+		spriteEnd_->Draw();
+	} else {
+		spriteSight_->Draw();
+		spriteLockon_->Draw();
 	}
 	spriteBlackout_->Draw();
 

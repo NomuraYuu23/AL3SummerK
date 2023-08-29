@@ -86,6 +86,8 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> spriteLockon_ = nullptr;
 	//クリア
 	std::unique_ptr<Sprite> spriteClear_ = nullptr;
+	//エンド
+	std::unique_ptr<Sprite> spriteEnd_ = nullptr;
 
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
