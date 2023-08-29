@@ -7,6 +7,7 @@
 
 // ImGui
 #include "ImGuiManager.h"
+#include <algorithm>
 
 /// <summary>
 /// 初期化
@@ -360,6 +361,10 @@ void Player::Move() {
 
 	// 移動
 	worldTransform_.translation_ = vecClac_->Add(worldTransform_.translation_, move);
+	worldTransform_.translation_.x =
+	    std::clamp(worldTransform_.translation_.x, -moveLimit_, moveLimit_);
+	worldTransform_.translation_.z =
+	    std::clamp(worldTransform_.translation_.z, -moveLimit_, moveLimit_);
 
 	// 移動方向に見た目を合わせる(Y軸)
 	worldTransform_.rotation_.y = viewProjection_->rotation_.y;

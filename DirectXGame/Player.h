@@ -151,4 +151,8 @@ private:
 	float lockonRange_ = 0.0f;
 	// レティクル距離
 	float lockonLength_ = 0.0f;
+
+	//移動限界
+	float moveLimit_ = 100.0f;
+
 };
