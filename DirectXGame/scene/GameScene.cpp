@@ -12,27 +12,38 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	
+	// サイト
 	uint32_t sightTextureHandle = TextureManager::Load("./Resources/sprite/sight.png");
 	spriteSight_.reset(Sprite::Create(
 	    sightTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
-
+	// ロックオン
 	uint32_t lockonTextureHandle = TextureManager::Load("./Resources/sprite/lockon.png");
 	spriteLockon_.reset(Sprite::Create(
 	    lockonTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
-
+	// クリア
 	uint32_t clearTextureHandle = TextureManager::Load("./Resources/sprite/clear.png");
 	spriteClear_.reset(Sprite::Create(
 	    clearTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight / 2.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
-
-	//spriteEnd_ 
+	// エンド
 	uint32_t endTextureHandle = TextureManager::Load("./Resources/sprite/end.png");
 	spriteEnd_.reset(Sprite::Create(
 	    endTextureHandle, Vector2(WinApp::kWindowWidth / 2.0f, WinApp::kWindowHeight * 2.0f / 3.0f),
 	    Vector4(1.0f, 1.0f, 1.0f, 1.0f), Vector2(0.5f, 0.5f)));
+	// ui
+	uint32_t uiTextureHandle = TextureManager::Load("./Resources/sprite/ui.png");
+	spriteUI_.reset(Sprite::Create(
+	    uiTextureHandle, Vector2(WinApp::kWindowWidth * 7.0f / 8.0f, WinApp::kWindowHeight / 2.0f),
+	    Vector4(1.0f, 1.0f, 1.0f, 0.8f), Vector2(0.5f, 0.5f)));
+	// 数字
+	uint32_t numTextureHandle = TextureManager::Load("./Resources/sprite/num.png");
+	spriteNum_[0].reset(Sprite::Create(
+	    numTextureHandle, Vector2(0, 0),
+	    Vector4(1.0f, 1.0f, 1.0f, 0.8f), Vector2(0.5f, 0.5f)));
+	spriteNum_[1].reset(Sprite::Create(
+	    numTextureHandle, Vector2(0, 0), Vector4(1.0f, 1.0f, 1.0f, 0.8f), Vector2(0.5f, 0.5f)));
 
 	//プレイヤー
 	player_ = std::make_unique<Player>();
@@ -202,7 +213,19 @@ void GameScene::Update() {
 	}
 
 	//クリア
-	if (enemyManager_->GetEnemyCount() <= 0) {
+	size_t enemyCount = enemyManager_->GetEnemyCount();
+	Vector2 numSize = {80.0f, 120.0f};
+
+	spriteNum_[0]->SetPosition(Vector2(WinApp::kWindowWidth * 16.5f / 20.0f, WinApp::kWindowHeight / 4.0f));
+	spriteNum_[0]->SetTextureRect(Vector2(float(enemyCount / 10) * numSize.x, 0.0f), numSize);
+	spriteNum_[0]->SetSize(numSize);
+	
+	spriteNum_[1]->SetPosition(
+	    Vector2(WinApp::kWindowWidth * 16.5f / 20.0f + numSize.x, WinApp::kWindowHeight / 4.0f));
+	spriteNum_[1]->SetTextureRect(Vector2(float(enemyCount % 10) * numSize.x, 0.0f), numSize);
+	spriteNum_[1]->SetSize(numSize);
+
+	if (enemyCount <= 0) {
 		clearFlg = true;
 	}
 
@@ -264,6 +287,9 @@ void GameScene::Draw() {
 		spriteSight_->Draw();
 		spriteLockon_->Draw();
 	}
+	spriteUI_->Draw();
+	spriteNum_[0]->Draw();
+	spriteNum_[1]->Draw();
 	spriteBlackout_->Draw();
 
 	// スプライト描画後処理

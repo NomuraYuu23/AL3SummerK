@@ -88,6 +88,10 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> spriteClear_ = nullptr;
 	//エンド
 	std::unique_ptr<Sprite> spriteEnd_ = nullptr;
+	//ui
+	std::unique_ptr<Sprite> spriteUI_ = nullptr;
+	//数字
+	std::unique_ptr<Sprite> spriteNum_[2] = {nullptr, nullptr};
 
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
