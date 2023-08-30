@@ -272,7 +272,11 @@ void Player::ReticleUpdate(Sprite* spriteLockon) {
 			// プレイヤーからエネミーまでの距離
 			float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
 
-			if (distance < lockonRange_ + lockonEnemy_->GetRadius() && length < lockonLength_) {
+			if (distance < lockonRange_ + lockonEnemy_->GetRadius() && length < lockonLength_ &&
+			    !(vecClac_->Dot(
+			          vecClac_->Subtract(GetWorldPosition(), lockonEnemy_->GetWorldPosition()),
+			          vecClac_->Subtract(GetWorldPosition(), viewProjection_->translation_)) >=
+			      0.0f)) {
 				lockonChange = false;
 			} else {
 				lockonEnemy_ = nullptr;
@@ -299,7 +303,11 @@ void Player::ReticleUpdate(Sprite* spriteLockon) {
 				float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
 
 				// ロックオン範囲、ロックオン距離にいる
-				if (distance < lockonRange_ + enemy->GetRadius() && length < lockonLength_) {
+				if (distance < lockonRange_ + enemy->GetRadius() && length < lockonLength_ &&
+				    !(vecClac_->Dot(
+				          vecClac_->Subtract(GetWorldPosition(), enemy->GetWorldPosition()),
+				          vecClac_->Subtract(GetWorldPosition(), viewProjection_->translation_)) >=
+				      0.0f)) {
 					// 敵をロックオン
 					if (!lockonEnemy) {
 						lockonEnemy = enemy;
