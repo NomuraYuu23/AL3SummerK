@@ -49,7 +49,8 @@ void EnemyManager::AddEnemy(size_t positionNum) {
 
 	Enemy* enemy = new Enemy();
 
-	enemy->Initialize(models_, initPositionData[positionNum]);
+	enemy->Initialize(
+	    models_, initPositionData[positionNum], enemySpeed[positionNum], enemyRotateSpeed[positionNum]);
 	enemies_.push_back(enemy);
 }
 

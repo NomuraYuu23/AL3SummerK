@@ -9,7 +9,7 @@
 /// </summary>
 /// <param name="model">モデル</param>
 /// <param name="textureHandle">テクスチャハンドル</param>
-void Enemy::Initialize(const std::vector<Model*>& models, Vector3 position) {
+void Enemy::Initialize(const std::vector<Model*>& models, Vector3 position, float speed, float rotateSpeed) {
 
 	// nullポインタチェック
 	assert(models.front());
@@ -29,6 +29,10 @@ void Enemy::Initialize(const std::vector<Model*>& models, Vector3 position) {
 	SetCollisionMask(0x00000002);
 
 	velocity_ = {0.1f, 0.1f, 0.1f};
+
+	speed_ = speed;
+
+	rotateSpeed_ = rotateSpeed;
 }
 
 /// <summary>
@@ -58,13 +62,13 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 /// </summary>
 void Enemy::Move() {
 
-	worldTransform_.rotation_.y += rotateSpeed;
+	worldTransform_.rotation_.y += rotateSpeed_;
 	if (worldTransform_.rotation_.y >= 2.0f * float(std::numbers::pi)) {
 		worldTransform_.rotation_.y -= 2.0f * float(std::numbers::pi);
 	}
 
 	// 移動速度
-	Vector3 velocity(0.0f, 0.0f, speed);
+	Vector3 velocity(0.0f, 0.0f, speed_);
 
 	// 速度ベクトルを向きに合わせて回転させる
 	velocity_ = matCalc_->TransformNormal(velocity, worldTransform_.matWorld_);

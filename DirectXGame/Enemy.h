@@ -19,7 +19,7 @@ public:
 	/// <param name="model">モデル</param>
 	/// <param name="textureHandle">テクスチャハンドル</param>
 	void Initialize(
-	    const std::vector<Model*>& models, Vector3 position = {0.0f, 0.0f, 0.0f});
+	    const std::vector<Model*>& models, Vector3 position = {0.0f, 0.0f, 0.0f}, float speed = 0.1f, float rotateSpeed = 0.1f);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -55,11 +55,9 @@ private:
 	// 1フレームでの補間割合t
 	float moveT = 0.025f;
 	// 速さ
-	const float speed = 0.1f;
+	float speed_ = 0.1f;
 	// 回転速さ
-	const float rotateSpeed = 0.1f;
-	// 移動条件距離
-	const float distanceToMove = 20.0f;
+	float rotateSpeed_ = 0.1f;
 
 	// デスフラグ
 	bool isDead_ = false;
