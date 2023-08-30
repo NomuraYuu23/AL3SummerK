@@ -117,7 +117,7 @@ void GameScene::Initialize() {
 	// エンドフラグ
 	endFlg_ = false;
 	// スピード
-	blackoutSpeed_ = 0.01f;
+	blackoutSpeed_ = 0.03f;
 
 	// シーン終了フラグ
 	endOfScene_ = false;

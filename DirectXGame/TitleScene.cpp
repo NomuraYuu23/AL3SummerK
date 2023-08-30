@@ -53,7 +53,7 @@ void TitleScene::Initialize() {
 	IsBlackout_ = false;
 
 	// スピード
-	blackoutSpeed_ = 0.01f;
+	blackoutSpeed_ = 0.03f;
 
 	endOfScene_ = false;
 
