@@ -42,7 +42,7 @@ void Player::Initialize(
 	// レティクル範囲
 	lockonRange_ = lockonRange;
 	// レティクル距離
-	lockonLength_ = 1000.0f;
+	lockonLength_ = 100.0f;
 
 	// 外部での値設定
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
@@ -132,7 +132,7 @@ void Player::ApplyGlobalVariables() {
 void Player::Move() {
 
 	// 速さ
-	const float speed = 0.3f;
+	const float speed = 0.5f;
 
 	// 移動量
 	Vector3 move = {};
@@ -270,7 +270,8 @@ void Player::ReticleUpdate(Sprite* spriteLockon) {
 			    std::powf(positionEnemy.y - position.y, 2.0f));
 
 			// プレイヤーからエネミーまでの距離
-			float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
+			float length = vecClac_->Length(
+			    vecClac_->Subtract(GetWorldPosition(), lockonEnemy_->GetWorldPosition()));
 
 			if (distance < lockonRange_ + lockonEnemy_->GetRadius() && length < lockonLength_ &&
 			    !(vecClac_->Dot(
@@ -300,7 +301,8 @@ void Player::ReticleUpdate(Sprite* spriteLockon) {
 				    std::powf(positionEnemy.y - position.y, 2.0f));
 
 				// プレイヤーからエネミーまでの距離
-				float length = vecClac_->Length(vecClac_->Subtract(position, positionEnemy));
+				float length = vecClac_->Length(
+				    vecClac_->Subtract(GetWorldPosition(), enemy->GetWorldPosition()));
 
 				// ロックオン範囲、ロックオン距離にいる
 				if (distance < lockonRange_ + enemy->GetRadius() && length < lockonLength_ &&

@@ -35,7 +35,7 @@ void FollowCamera::Update() {
 		    Vector3Calc::GetInstance()->Add(target_->translation_, offset);
 	}
 
-	const float RotateSpeed = 0.01f;
+	const float RotateSpeed = 0.0125f;
 
 	if (input_->PushKey(DIK_RIGHT)) {
 		viewProjection_.rotation_.y += RotateSpeed;

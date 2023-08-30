@@ -109,9 +109,9 @@ private:
 	// モデル
 	std::vector<Model*> modelsBullet_;
 	// 弾の速度
-	const float kBulletSpeed = 1.0f;
+	const float kBulletSpeed = 3.0f;
 	// 発射間隔(秒)
-	const float kFiringInterval = 1.0f;
+	const float kFiringInterval = 0.5f;
 	// 発射クールタイム
 	float firingIntervalCount = 0.0f;
 
