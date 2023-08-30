@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Enemy.h"
-#include "GlobalVariables.h"
 #include <sstream>
 #include <cassert>
 #include "WinApp.h"
@@ -43,16 +42,6 @@ void Player::Initialize(
 	lockonRange_ = lockonRange;
 	// レティクル距離
 	lockonLength_ = 1000.0f;
-
-	// 外部での値設定
-	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
-	const char* groupName = "Player";
-	// グループを追加
-	GlobalVariables::GetInstance()->CreateGroup(groupName);
-
-	// ワールドトランスフォーム
-	globalVariables->AddItem(groupName, "WorldTransform Translate", worldTransform_.translation_);
-	globalVariables->AddItem(groupName, "WorldTransform Rotate", worldTransform_.rotation_);
 
 }
 
@@ -116,14 +105,6 @@ void Player::Draw(const ViewProjection& viewProjection) {
 /// </summary>
 void Player::ApplyGlobalVariables() {
 
-	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
-	const char* groupName = "Player";
-
-	// ワールドトランスフォーム
-	worldTransform_.translation_ =
-	    globalVariables->GetVector3Value(groupName, "WorldTransform Translate");
-	worldTransform_.rotation_ =
-	    globalVariables->GetVector3Value(groupName, "WorldTransform Rotate");
 }
 
 /// <summary>
