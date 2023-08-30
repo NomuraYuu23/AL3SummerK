@@ -22,19 +22,6 @@ class Enemy;
 class Player : public BaseCharacter {
 
 public:
-	// モデル
-	enum class playerModelIndex {
-		kModelIndexBody = 0,   // 体
-		kModelIndexHead = 1,   // 頭
-		kModelIndexUL_arm = 2, // 左上腕
-		kModelIndexLL_arm = 3, // 左下腕
-		kModelIndexUR_arm = 4, // 右上腕
-		kModelIndexLR_arm = 5, // 右下腕
-		kModelIndexUL_leg = 6, // 左上足
-		kModelIndexLL_leg = 7, // 左下足
-		kModelIndexUR_leg = 8, // 右上足
-		kModelIndexLR_leg = 9, // 右下足
-	};
 
 	/// <summary>
 	/// 初期化
@@ -113,9 +100,6 @@ private:
 	Input* input_;
 	Matrix4x4Calc* matCalc_;
 	Vector3Calc* vecClac_;
-
-	// モデル用ワールドトランスフォーム
-	WorldTransform modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg) + 1];
 
 	// カメラのビュープロジェクション
 	const ViewProjection* viewProjection_ = nullptr;

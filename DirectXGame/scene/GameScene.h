@@ -97,16 +97,7 @@ private: // メンバ変数
 	std::unique_ptr<Player> player_ = nullptr;
 
 	// プレイヤー3Dモデル
-	std::unique_ptr<Model> modelPlayerBody_ = nullptr;
-	std::unique_ptr<Model> modelPlayerHead_ = nullptr;
-	std::unique_ptr<Model> modelPlayerUL_arm_ = nullptr;
-	std::unique_ptr<Model> modelPlayerLL_arm_ = nullptr;
-	std::unique_ptr<Model> modelPlayerUR_arm_ = nullptr;
-	std::unique_ptr<Model> modelPlayerLR_arm_ = nullptr;
-	std::unique_ptr<Model> modelPlayerUL_leg_ = nullptr;
-	std::unique_ptr<Model> modelPlayerLL_leg_ = nullptr;
-	std::unique_ptr<Model> modelPlayerUR_leg_ = nullptr;
-	std::unique_ptr<Model> modelPlayerLR_leg_ = nullptr;
+	std::unique_ptr<Model> modelPlayer_ = nullptr;
 
 	// プレイヤー弾モデル
 	std::unique_ptr<Model> modelPlayerBullet_ = nullptr;

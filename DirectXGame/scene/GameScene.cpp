@@ -48,31 +48,10 @@ void GameScene::Initialize() {
 	//プレイヤー
 	player_ = std::make_unique<Player>();
 	//プレイヤー3Dモデル
-	modelPlayerBody_.reset(Model::CreateFromOBJ("testBoneLowerJoint",true));
-	modelPlayerHead_.reset(Model::CreateFromOBJ("testBoneLowerJoint", true));
-	modelPlayerUL_arm_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerLL_arm_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerUR_arm_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerLR_arm_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerUL_leg_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerLL_leg_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerUR_leg_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
-	modelPlayerLR_leg_.reset(Model::CreateFromOBJ("testBoneUpperJoint", true));
+	modelPlayer_.reset(Model::CreateFromOBJ("player",true));
 
 	std::vector<Model*> playerModels = {
-		modelPlayerBody_.get(),
-		modelPlayerHead_.get(),
-
-		modelPlayerUL_arm_.get(),
-		modelPlayerLL_arm_.get(),
-		modelPlayerUR_arm_.get(),
-		modelPlayerLR_arm_.get(),
-
-		modelPlayerUL_leg_.get(),
-		modelPlayerLL_leg_.get(),
-		modelPlayerUR_leg_.get(),
-		modelPlayerLR_leg_.get(),
-
+		modelPlayer_.get(),
 	};
 
 	//プレイヤー弾モデル

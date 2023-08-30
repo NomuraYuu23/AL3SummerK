@@ -44,63 +44,6 @@ void Player::Initialize(
 	// レティクル距離
 	lockonLength_ = 1000.0f;
 
-	// モデルワールドトランスフォーム
-
-	for (size_t i = 0; i < static_cast<int>(playerModelIndex::kModelIndexLR_leg) + 1; i++) {
-		modelWorldTransforms_[i].Initialize();
-	}
-
-	// kModelIndexBody = 0,   //体
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)].parent_ =
-	    &worldTransform_;
-
-	// kModelIndexHead = 1,   //頭
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].translation_.y += 2.5f;
-
-	// kModelIndexUL_arm = 2, //左上腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_.y += 3.0f;
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_.x += -1.0f;
-
-	// kModelIndexLL_arm = 3, //左下腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].translation_.y -= 1.5f;
-
-	// kModelIndexUR_arm = 4, //右上腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_.y += 3.0f;
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_.x += 1.0f;
-
-	// kModelIndexLR_arm = 5, //右下腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].translation_.y -= 1.5f;
-
-	// kModelIndexUL_leg = 6, //左上足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].translation_.x += -0.5f;
-
-	// kModelIndexLL_leg = 7, //左下足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_leg)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_leg)].translation_.y +=-1.0f;
-
-	// kModelIndexUR_leg = 8, //右上足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)].translation_.x += 0.5f;
-
-	// kModelIndexLR_leg = 9, //右下足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].parent_ =
-	    &modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)];
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].translation_.y += -1.0f;
-
 	// 外部での値設定
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 	const char* groupName = "Player";
@@ -110,89 +53,7 @@ void Player::Initialize(
 	// ワールドトランスフォーム
 	globalVariables->AddItem(groupName, "WorldTransform Translate", worldTransform_.translation_);
 	globalVariables->AddItem(groupName, "WorldTransform Rotate", worldTransform_.rotation_);
-	// モデル用ワールドトランスフォーム
 
-	// kModelIndexBody = 0,   //体
-	globalVariables->AddItem(
-	    groupName, "MWT Body Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT Body Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)].rotation_);
-
-	// kModelIndexHead = 1,   //頭
-	globalVariables->AddItem(
-	    groupName, "MWT Head Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT Head Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].rotation_);
-
-	// kModelIndexUL_arm = 2, //左上腕
-	globalVariables->AddItem(
-	    groupName, "MWT UL_arm Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT UL_arm Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].rotation_);
-
-	// kModelIndexLL_arm = 3, //左下腕
-	globalVariables->AddItem(
-	    groupName, "MWT LL_arm Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT LL_arm Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].rotation_);
-
-	// kModelIndexUR_arm = 4, //右上腕
-	globalVariables->AddItem(
-	    groupName, "MWT UR_arm Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT UR_arm Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].rotation_);
-
-	// kModelIndexLR_arm = 5, //右下腕
-	globalVariables->AddItem(
-	    groupName, "MWT LR_arm Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT LR_arm Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].rotation_);
-
-	// kModelIndexUL_leg = 6, //左上足
-	globalVariables->AddItem(
-	    groupName, "MWT UL_leg Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT UL_leg Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].rotation_);
-
-	// kModelIndexLL_leg = 7, //左下足
-	globalVariables->AddItem(
-	    groupName, "MWT LL_leg Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_leg)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT LL_leg Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_leg)].rotation_);
-
-	// kModelIndexUR_leg = 8, //右上足
-	globalVariables->AddItem(
-	    groupName, "MWT UR_leg Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT UR_leg Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)].rotation_);
-
-	// kModelIndexLR_leg = 9, //右下足
-	globalVariables->AddItem(
-	    groupName, "MWT LR_leg Translate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].translation_);
-	globalVariables->AddItem(
-	    groupName, "MWT LR_leg Rotate",
-	    modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].rotation_);
-
-	//ApplyGlobalVariables();
 }
 
 /// <summary>
@@ -222,9 +83,6 @@ void Player::Update(Sprite* spriteLockon) {
 
 	// ワールド行列更新
 	worldTransform_.UpdateMatrix();
-	for (WorldTransform& worldTransform : modelWorldTransforms_) {
-		worldTransform.UpdateMatrix();
-	}
 
 	// 弾更新
 	for (PlayerBullet* bullet : bullets_) {
@@ -242,7 +100,7 @@ void Player::Draw(const ViewProjection& viewProjection) {
 	uint8_t i = 0;
 
 	for (Model* model : models_) {
-		model->Draw(modelWorldTransforms_[i], viewProjection);
+		model->Draw(worldTransform_, viewProjection);
 		i++;
 	}
 
@@ -266,67 +124,6 @@ void Player::ApplyGlobalVariables() {
 	    globalVariables->GetVector3Value(groupName, "WorldTransform Translate");
 	worldTransform_.rotation_ =
 	    globalVariables->GetVector3Value(groupName, "WorldTransform Rotate");
-
-	// モデル用ワールドトランスフォーム
-
-	// kModelIndexBody = 0,   //体
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT Body Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexBody)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT Body Rotate");
-
-	// kModelIndexHead = 1,   //頭
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT Head Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexHead)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT Head Rotate");
-
-	// kModelIndexUL_arm = 2, //左上腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UL_arm Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_arm)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UL_arm Rotate");
-
-	// kModelIndexLL_arm = 3, //左下腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LL_arm Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_arm)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LL_arm Rotate");
-
-	// kModelIndexUR_arm = 4, //右上腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UR_arm Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_arm)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UR_arm Rotate");
-	// kModelIndexLR_arm = 5, //右下腕
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LR_arm Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_arm)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LR_arm Rotate");
-
-	// kModelIndexUL_leg = 6, //左上足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UL_leg Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUL_leg)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UL_leg Rotate");
-
-	// kModelIndexLL_leg = 7, //左下足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_leg)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LL_leg Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLL_leg)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LL_leg Rotate");
-
-	// kModelIndexUR_leg = 8, //右上足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UR_leg Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexUR_leg)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT UR_leg Rotate");
-
-	// kModelIndexLR_leg = 9, //右下足
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].translation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LR_leg Translate");
-	modelWorldTransforms_[static_cast<int>(playerModelIndex::kModelIndexLR_leg)].rotation_ =
-	    globalVariables->GetVector3Value(groupName, "MWT LR_leg Rotate");
 }
 
 /// <summary>
