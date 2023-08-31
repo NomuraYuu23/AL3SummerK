@@ -112,6 +112,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyEffect.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyEffect.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="GlobalVariables.h" />

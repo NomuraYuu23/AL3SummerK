@@ -4,7 +4,11 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() {
+
+	enemyManager_->Delete();
+
+}
 
 void GameScene::Initialize() {
 

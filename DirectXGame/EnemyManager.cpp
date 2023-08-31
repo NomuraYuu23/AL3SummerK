@@ -30,6 +30,10 @@ void EnemyManager::Update() {
 	for (Enemy* enemy : enemies_) {
 		enemy->Update();
 	}
+	for (EnemyEffect* enemyEffect : enemyEffects_) {
+		enemyEffect->Update();
+	}
+
 }
 
 /// <summary>
@@ -40,6 +44,10 @@ void EnemyManager::Draw(const ViewProjection& viewProjection) {
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw(viewProjection);
 	}
+	for (EnemyEffect* enemyEffect : enemyEffects_) {
+		enemyEffect->Draw(viewProjection);
+	}
+
 }
 
 /// <summary>
@@ -52,6 +60,7 @@ void EnemyManager::AddEnemy(size_t positionNum) {
 	enemy->Initialize(
 	    models_, initPositionData[positionNum], enemySpeed[positionNum], enemyRotateSpeed[positionNum]);
 	enemies_.push_back(enemy);
+
 }
 
 /// <summary>
@@ -62,6 +71,11 @@ void EnemyManager::DeleteEnemy() {
 	for (Enemy* enemy : enemies_) {
 		if (enemy->IsDead()) {
 			enemyCount_--;
+
+			EnemyEffect* enemyEffect = new EnemyEffect();
+			enemyEffect->Initialize(models_, enemy->GetWorldTransform().translation_);
+			enemyEffects_.push_back(enemyEffect);
+
 		}
 	}
 
@@ -73,6 +87,15 @@ void EnemyManager::DeleteEnemy() {
 		}
 		return false;
 	});
+
+	enemyEffects_.remove_if([](EnemyEffect* enemyEffect) {
+		if (enemyEffect->IsDead()) {
+			delete enemyEffect;
+			return true;
+		}
+		return false;
+	});
+
 }
 
 /// <summary>
@@ -83,6 +106,11 @@ void EnemyManager::Delete() {
 		delete enemy;
 		return true;
 	});
+	enemyEffects_.remove_if([](EnemyEffect* enemyEffect) {
+		delete enemyEffect;
+		return true;
+	});
+
 }
 
 /// <summary>

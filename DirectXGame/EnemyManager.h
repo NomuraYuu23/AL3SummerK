@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "EnemyEffect.h"
 #include "Model.h"
 
 class Player;
@@ -114,5 +115,8 @@ private:
 		0.007f, -0.007f, -0.006f, 0.006f,
 		-0.005f, 0.005f, -0.005f, 0.005f
 	};
+
+	//エネミーエフェクト
+	std::list<EnemyEffect*> enemyEffects_;
 
 };
