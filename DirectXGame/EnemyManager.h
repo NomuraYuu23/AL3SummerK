@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::vector<Model*>& models);
+	void Initialize(const std::vector<Model*>& models, const std::vector<Model*>& effectModels);
 
 	/// <summary>
 	/// 更新
@@ -66,6 +66,8 @@ private:
 	std::list<Enemy*> enemies_;
 	// エネミーモデル
 	std::vector<Model*> models_;
+	//エネミーエフェクトモデル
+	std::vector<Model*> effectModels_;
 
 	// エネミー数
 	size_t enemyCount_;

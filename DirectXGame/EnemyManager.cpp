@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include <numbers>
 
 /// <summary>
 /// シングルトンインスタンスの取得
@@ -12,9 +13,11 @@ EnemyManager* EnemyManager::GetInstance() {
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyManager::Initialize(const std::vector<Model*>& models) {
+void EnemyManager::Initialize(
+    const std::vector<Model*>& models, const std::vector<Model*>& effectModels) {
 
 	models_ = models;
+	effectModels_ = effectModels;
 	enemyCount_ = enemyMax;
 
 	for (size_t i = 0; i < enemyMax; i++) {
@@ -71,10 +74,17 @@ void EnemyManager::DeleteEnemy() {
 	for (Enemy* enemy : enemies_) {
 		if (enemy->IsDead()) {
 			enemyCount_--;
-
-			EnemyEffect* enemyEffect = new EnemyEffect();
-			enemyEffect->Initialize(models_, enemy->GetWorldTransform().translation_);
-			enemyEffects_.push_back(enemyEffect);
+			float speed = 0.01f;
+			for (size_t i = 0; i < 8; i++) {
+				Vector3 acceleration = {
+				    std::sinf( float(std::numbers::pi) * float(i) / 4.0f) * speed,
+					-9.8f / 60.0f,
+				    std::cosf(float(std::numbers::pi) * float(i) / 4.0f) * speed};
+				EnemyEffect* enemyEffect = new EnemyEffect();
+				enemyEffect->Initialize(
+				    effectModels_, enemy->GetWorldTransform().translation_, acceleration);
+				enemyEffects_.push_back(enemyEffect);
+			}
 
 		}
 	}

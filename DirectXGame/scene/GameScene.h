@@ -109,6 +109,8 @@ private: // メンバ変数
 	EnemyManager* enemyManager_ = nullptr;
 	// エネミーモデル
 	std::unique_ptr<Model> modelEnemy_ = nullptr;
+	// エネミーエフェクトモデル
+	std::unique_ptr<Model> modelEnemyEffect_ = nullptr;
 
 	// グラウンド
 	std::unique_ptr<Ground> ground_ = nullptr;

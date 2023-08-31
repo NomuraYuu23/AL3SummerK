@@ -81,8 +81,13 @@ void GameScene::Initialize() {
 	std::vector<Model*> enemyModels = {
 		modelEnemy_.get()
 	};
+	// エネミーエフェクトモデル
+	modelEnemyEffect_.reset(Model::CreateFromOBJ("enemyEffect", true));
+	std::vector<Model*> enemyEffectModels = {
+		modelEnemyEffect_.get()
+	};
 	//エネミー
-	enemyManager_->Initialize(enemyModels);
+	enemyManager_->Initialize(enemyModels, enemyEffectModels);
 	
 	player_->SetEnemies(enemyManager_->GetEnemies());
 
